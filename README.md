@@ -1,45 +1,158 @@
-# EEG Sleep Spindle Detection
+# EEG Sleep Spindle Detection using Hilbert Transform & YASA Benchmark
 
-## Overview
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![MNE](https://img.shields.io/badge/MNE-EEG-orange)
+![YASA](https://img.shields.io/badge/YASA-Sleep%20Analysis-green)
+![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-red)
+![Signal Processing](https://img.shields.io/badge/Domain-Signal%20Processing-purple)
 
-This project implements a custom sleep spindle detection algorithm using EEG data and compares it with an automated benchmark (YASA).
+---
+
+## Project Overview
+
+This project implements a **custom sleep spindle detection pipeline** using EEG recordings from the ANPHY-Sleep dataset and compares results against the automated **YASA spindle detection framework**.
+
+Sleep spindles are short bursts of oscillatory activity occurring during NREM sleep and are associated with memory consolidation, learning, and neurological health.
+
+---
 
 ## Objective
 
-To detect sleep spindles (11–16 Hz oscillations lasting 0.5–2 seconds) and evaluate the performance of a manual detection method against an automated algorithm.
+* Detect sleep spindles (11–16 Hz oscillations lasting 0.5–2 sec)
+* Build a manual signal-processing pipeline
+* Compare results with YASA automated detection
+* Analyze spindle variability across subjects
 
-## Methodology
-
-* Bandpass filtering (0.5–30 Hz) to remove noise
-* Spindle band filtering (11–16 Hz)
-* Hilbert transform to extract amplitude envelope
-* Thresholding using mean + k × std
-* Duration filtering (0.5–2 seconds)
-* Comparison with YASA automated detection
-
-## Results
-
-* Performance evaluated using spindle count, density, and average duration
-* Observed variability across participants
-* YASA tends to detect slightly longer spindle durations
+---
 
 ## Dataset
 
-ANPHY-Sleep Dataset:
+Dataset: ANPHY Sleep Dataset
 https://osf.io/r26fh/overview
 
-## How to Run
+Participants Used:
 
-1. Install dependencies:
-   pip install mne yasa numpy scipy matplotlib
+* P11
+* P12
+* P13
+* P14
+* P15
 
-2. Open the notebook:
-   EEG_Spindle_Detection.ipynb
+---
 
-## Note
+## Methodology
 
-Dataset is not included due to size and licensing constraints.
+### 1. EEG Preprocessing
+
+* Bandpass Filter: 0.5–30 Hz
+* Noise removal
+* Channel selection: Cz
+
+### 2. Spindle Band Isolation
+
+* Bandpass Filter: 11–16 Hz
+
+### 3. Envelope Extraction
+
+* Hilbert Transform
+* Moving average smoothing
+
+### 4. Spindle Detection
+
+Threshold:
+
+```python
+threshold = mean + k * std
+```
+
+Duration constraints:
+
+* Minimum: 0.5 sec
+* Maximum: 2 sec
+
+### 5. Benchmark Comparison
+
+Compared against:
+
+* YASA spindle detection framework
+
+---
+
+## Results Summary
+
+| Participant | Manual Count | YASA Count |
+| ----------- | ------------ | ---------- |
+| P11         | 576          | 561        |
+| P12         | 314          | 246        |
+| P13         | 559          | 1090       |
+| P14         | 579          | 826        |
+| P15         | 390          | 176        |
+
+---
+
+# Visual Results
+
+## Sleep Spindle Detection Overlay
+
+This visualization compares manual detections vs YASA detections.
+
+![Sleep Spindle Overlay](images/spindle_overlay.png)
+
+---
+
+## Power Spectral Density Plot
+
+Shows frequency concentration within spindle frequency band.
+
+![PSD Plot](images/psd_plot.png)
+
+---
+
+## Performance Comparison Table
+
+Comparison of spindle counts, density, and duration.
+
+![Performance Table](images/performance_table.png)
+
+---
+
+## Tech Stack
+
+* Python
+* MNE
+* YASA
+* NumPy
+* SciPy
+* Matplotlib
+* Jupyter Notebook
+
+---
+
+## Project Structure
+
+```bash
+EEG_Sleep_Spindle_Detection/
+│
+├── EEG_Spindle_Detection.ipynb
+├── README.md
+├── .gitignore
+└── images/
+    ├── spindle_overlay.png
+    ├── psd_plot.png
+    └── performance_table.png
+```
+
+---
+
+## Future Improvements
+
+* Deep learning spindle detection
+* Multi-channel EEG analysis
+* Real-time deployment for sleep monitoring systems
+
+---
 
 ## Author
 
-NagaPavan Musunuri
+**NagaPavan Musunuri**
+AI/ML | Signal Processing | Brain Computer Interfaces
